@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Ahorcado Alcolirykoz</title>
+<style>
+  body {
+    background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
+    color: #f4f4f4;
+    font-family: 'Courier New', monospace;
+    text-align: center;
+    padding: 40px;
+  }
+
+  h1 {
+    color: #ffd700;
+    text-shadow: 0 0 15px red;
+    margin-bottom: 10px;
+  }
+
+  #pregunta {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    color: #ccc;
+  }
+
+  #palabra {
+    font-size: 2em;
+    letter-spacing: 10px;
+    margin: 20px 0;
+  }
+
+  #letras button {
+    background-color: #111;
+    color: #ffd700;
+    border: 1px solid #ffd700;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  #letras button:hover {
+    background-color: #ffd700;
+    color: #111;
+  }
+
+  #mensaje {
+    margin-top: 20px;
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+
+  #intentos {
+    margin-top: 10px;
+  }
+
+  #reiniciar {
+    margin-top: 20px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  #reiniciar:hover {
+    background-color: #ffd700;
+    color: #111;
+  }
+
+  footer {
+    margin-top: 40px;
+    font-size: 0.9em;
+    color: #777;
+  }
+</style>
+</head>
+<body>
+
+<h1>🎤 Ahorcado: Alcolirykoz 🎤</h1>
+<p id="pregunta"></p>
+<p id="palabra"></p>
+<p id="intentos">Intentos restantes: 6</p>
+<div id="letras"></div>
+<p id="mensaje"></p>
+<button id="reiniciar" onclick="iniciarJuego()">🔄 Reiniciar</button>
+
+<footer>
+  Creado por <b>Tomas Z & Marisol G</b> 💛🎧
+</footer>
+
+<script>
+const preguntas = [
+  { pregunta: "¿De qué barrio son los Alcolirykoz?", respuesta: "ARANJUEZ" },
+  { pregunta: "¿Ciudad donde nacieron los Alcolirykoz?", respuesta: "MEDELLIN" },
+  { pregunta: "¿Cómo se llama el rapero principal del grupo?", respuesta: "GAMBETA" },
+  { pregunta: "¿Cómo se llama el otro MC además de Gambeta?", respuesta: "KAZTRO" },
+  { pregunta: "¿Quién es el DJ del grupo?", respuesta: "FAZETA" },
+  { pregunta: "¿Qué género musical representan?", respuesta: "RAP" },
+  { pregunta: "¿Cómo se llama el álbum con la canción 'Tararea'?", respuesta: "SERVICIOS" },
+  { pregunta: "¿Nombre de la canción que menciona 'El Despertar del Hombre Neón'?", respuesta: "CAMINO" },
+  { pregunta: "¿Qué significa la Z en el logo del grupo?", respuesta: "ZONA" },
+  { pregunta: "¿Con qué palabra suelen describir su estilo de rap?", respuesta: "REAL" },
+  { pregunta: "¿Cómo se llama la canción que dice 'No hay flores sin espinas'?", respuesta: "LAESQUINA" },
+  { pregunta: "¿Cómo se llama el sello discográfico independiente que formaron?", respuesta: "FONDO" }
+];
+
+let palabraSecreta = "";
+let palabraAdivinada = [];
+let intentos = 6;
+let preguntaActual = "";
+
+function iniciarJuego() {
+  const seleccion = preguntas[Math.floor(Math.random() * preguntas.length)];
+  preguntaActual = seleccion.pregunta;
+  palabraSecreta = seleccion.respuesta.toUpperCase();
+  palabraAdivinada = Array(palabraSecreta.length).fill("_");
+  intentos = 6;
+
+  document.getElementById("pregunta").textContent = "🧠 Pista: " + preguntaActual;
+  document.getElementById("mensaje").textContent = "";
+  document.getElementById("intentos").textContent = "Intentos restantes: " + intentos;
+  mostrarPalabra();
+  crearBotones();
+}
+
+function mostrarPalabra() {
+  document.getElementById("palabra").textContent = palabraAdivinada.join(" ");
+}
+
+function crearBotones() {
+  const letrasDiv = document.getElementById("letras");
+  letrasDiv.innerHTML = "";
+  const abecedario = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+  for (let letra of abecedario) {
+    const boton = document.createElement("button");
+    boton.textContent = letra;
+    boton.onclick = () => elegirLetra(letra, boton);
+    letrasDiv.appendChild(boton);
+  }
+}
+
+function elegirLetra(letra, boton) {
+  boton.disabled = true;
+  if (palabraSecreta.includes(letra)) {
+    for (let i = 0; i < palabraSecreta.length; i++) {
+      if (palabraSecreta[i] === letra) {
+        palabraAdivinada[i] = letra;
+      }
+    }
+  } else {
+    intentos--;
+    document.getElementById("intentos").textContent = "Intentos restantes: " + intentos;
+  }
+
+  mostrarPalabra();
+  verificarEstado();
+}
+
+function verificarEstado() {
+  if (!palabraAdivinada.includes("_")) {
+    document.getElementById("mensaje").textContent = "🔥 ¡La rompiste! ¡Respuesta correcta! 🔥";
+    desactivarBotones();
+  } else if (intentos <= 0) {
+    document.getElementById("mensaje").textContent = "💀 Perdiste... La respuesta era: " + palabraSecreta;
+    desactivarBotones();
+  }
+}
+
+function desactivarBotones() {
+  const botones = document.querySelectorAll("#letras button");
+  botones.forEach(boton => boton.disabled = true);
+}
+
+iniciarJuego();
+</script>
+
+</body>
+</html>

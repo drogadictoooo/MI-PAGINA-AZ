@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registro Alcolirykoz</title>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Courier New', monospace;
+        background: linear-gradient(180deg, #000, #111, #000);
+        color: #f4f4f4;
+        padding: 40px 20px;
+        text-align: center;
+    }
+
+    header {
+        background: #111;
+        border-bottom: 3px solid #ffd700;
+        padding: 30px;
+        box-shadow: 0 0 25px rgba(255,215,0,0.3);
+    }
+
+    header h1 {
+        color: #ffd700;
+        font-size: 2.8em;
+        text-shadow: 0 0 15px red;
+        margin: 0;
+    }
+
+    header p {
+        color: #bbb;
+        margin-top: 5px;
+    }
+
+    form {
+        max-width: 650px;
+        margin: 40px auto;
+        background: #1a1a1a;
+        padding: 30px;
+        border-radius: 15px;
+        border: 2px solid #ffd700;
+        box-shadow: 0 0 20px rgba(255,215,0,0.15);
+        text-align: left;
+    }
+
+    label {
+        display: block;
+        color: #ffd700;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    input, select, textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        background: #222;
+        border: none;
+        border-radius: 8px;
+        color: #fff;
+        font-size: 1em;
+        outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+        box-shadow: 0 0 10px #ffd700;
+    }
+
+    button {
+        width: 100%;
+        background: #ffd700;
+        color: #111;
+        border: none;
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 1.1em;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #ffea00;
+        transform: scale(1.02);
+    }
+
+    #confirmacion {
+        display: none;
+        color: #0f0;
+        font-weight: bold;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    footer {
+        margin-top: 50px;
+        color: #888;
+        font-size: 0.9em;
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>📋 Registro Alcolirykoz</h1>
+    <p>Completa tus datos y haz parte del movimiento del rap real 🎤</p>
+</header>
+
+<form id="registroForm">
+    <label for="nombre">Nombre completo:</label>
+    <input type="text" id="nombre" name="nombre" placeholder="Ejemplo: Tomas Zapata" required>
+
+    <label for="edad">Edad:</label>
+    <input type="number" id="edad" name="edad" min="10" max="99" placeholder="Ejemplo: 18" required>
+
+    <label for="correo">Correo electrónico:</label>
+    <input type="email" id="correo" name="correo" placeholder="tucorreo@email.com" required>
+
+    <label for="ciudad">Ciudad:</label>
+    <input type="text" id="ciudad" name="ciudad" placeholder="Ejemplo: Medellín" required>
+
+    <label for="ocupacion">Ocupación:</label>
+    <input type="text" id="ocupacion" name="ocupacion" placeholder="Ejemplo: Estudiante / Músico / Trabajador" required>
+
+    <label for="genero">Género:</label>
+    <select id="genero" name="genero" required>
+        <option value="">Selecciona una opción</option>
+        <option value="Masculino">Masculino</option>
+        <option value="Femenino">Femenino</option>
+        <option value="Otro">Otro</option>
+    </select>
+
+    <label for="mensaje">Comentario o mensaje:</label>
+    <textarea id="mensaje" name="mensaje" rows="4" placeholder="Escribe aquí tu mensaje para Alcolirykoz..." required></textarea>
+
+    <button type="submit">Enviar Registro</button>
+</form>
+
+<p id="confirmacion">✅ ¡Datos enviados correctamente! Gracias por ser parte de la familia Alcolirykoz 💛</p>
+
+<footer>
+    Creado por <b>Tomas Z & Marisol G</b> | Inspirado en el legado de <b>Alcolirykoz</b> 🎧
+</footer>
+
+<script>
+document.getElementById("registroForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    document.getElementById("confirmacion").style.display = "block";
+    e.target.reset();
+});
+</script>
+
+</body>
+</html>
